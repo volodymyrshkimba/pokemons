@@ -31,7 +31,7 @@ export default function Select({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex-col  gap-1 relative">
+    <div className="flex-col  gap-1 relative max-w-[400px]">
       <p className="font-medium">{label}</p>
       <div className="flex justify-between items-center h-8 py-2 px-3 relative rounded-[4px] border">
         <div className="overflow-x-auto whitespace-nowrap">
