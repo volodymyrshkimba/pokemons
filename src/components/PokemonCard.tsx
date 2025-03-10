@@ -1,13 +1,24 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Pokemon } from "../App";
 
-export default function PokemonCard({ pokemon }) {
-  const [pokemonInfo, setPokemonInfo] = useState(null);
+interface PokemonCardProps {
+  pokemon: Pokemon;
+}
+
+interface PokemonInfo {
+  sprites: {
+    front_default: string;
+  };
+}
+
+export default function PokemonCard({ pokemon }: PokemonCardProps) {
+  const [pokemonInfo, setPokemonInfo] = useState<PokemonInfo | null>(null);
 
   useEffect(() => {
     const fetchPokemon = async () => {
       try {
-        const { data } = await axios.get(pokemon.url);
+        const { data } = await axios.get<PokemonInfo>(pokemon.url);
 
         setPokemonInfo(data);
       } catch (error) {

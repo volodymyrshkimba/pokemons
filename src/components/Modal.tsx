@@ -1,18 +1,42 @@
 import { useEffect } from "react";
+import { DefaultValues } from "react-hook-form";
 
 import PokemonCard from "./PokemonCard";
 
 import { XMarkIcon } from "@heroicons/react/24/solid";
+
+import { Pokemon } from "../App";
+import { FormData } from "./Form";
+
+type ResetForm = (
+  values?: DefaultValues<FormData>,
+  options?: {
+    keepErrors?: boolean;
+    keepDirty?: boolean;
+    keepValues?: boolean;
+    keepIsSubmitted?: boolean;
+    keepTouched?: boolean;
+    keepIsValid?: boolean;
+    keepDefaultValues?: boolean;
+  }
+) => void;
+
+interface ModalProps {
+  selectedPokemons: Pokemon[];
+  setModalOpen: (isopen: boolean) => void;
+  setSelectedPokemons: (pokemons: Pokemon[]) => void;
+  resetForm: ResetForm;
+}
 
 export default function Modal({
   selectedPokemons,
   setModalOpen,
   setSelectedPokemons,
   resetForm,
-}) {
+}: ModalProps) {
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (event.target.closest(".modal") === null) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if ((event.target as HTMLElement).closest(".modal") === null) {
         setModalOpen(false);
       }
     };
@@ -41,13 +65,7 @@ export default function Modal({
         </button>
         <ul className="space-y-4 overflow-auto ">
           {selectedPokemons.map((pokemon) => {
-            return (
-              <PokemonCard
-                key={pokemon.name}
-                pokemon={pokemon}
-                setSelectedPokemons={setSelectedPokemons}
-              />
-            );
+            return <PokemonCard key={pokemon.name} pokemon={pokemon} />;
           })}
         </ul>
         <div className="flex justify-end gap-4 ">
